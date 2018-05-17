@@ -2,21 +2,34 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-     if user.nil?
+    if user.nil?
         can :read, [Category]
-    elsif user.role? "admin"
-        #can [:create, :read, :update, :destroy]
-        can :manage, [Category, User, Role, Permission]
-    elsif user.role? "user"
+    else
+        if user.role? nil
+            can :read, [Category]
+        elsif user.role? "admin"
+            #can [:create, :read, :update, :destroy]
+            can :manage, [Category, User, Role, Permission]
+        elsif user.role? "user"
+            if user.role? "editor"
+                can :edit, [Category]
+            elsif user.role? "create"
+                can :create, [Category]
+            elsif user.role? "show"
+                can :show, [Category]
+            elsif user.role? "delete"
+                can :destroy, [Category]
+            end
         can :read, [Category]
-    elsif user.role? "editor"
-        can :edit, [Category]
-    elsif user.role? "create"
-        can :create, [Category]
-    elsif user.role? "show"
-        can :show, [Category]
-    elsif user.role? "delete"
-        can :destroy, [Category]
+        # elsif user.role? "editor"
+        #     can :edit, [Category]
+        # elsif user.role? "create"
+        #     can :create, [Category]
+        # elsif user.role? "show"
+        #     can :show, [Category]
+        # elsif user.role? "delete"
+        #     can :destroy, [Category]
+        end
     end
     # Define abilities for the passed in user here. For example:
     #

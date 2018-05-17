@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @permission = Permission.new
+    # @permission = Permission.find_by(:user_id => params[:user_id])
   end
 
   # GET /users/1
