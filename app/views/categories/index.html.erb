@@ -20,19 +20,18 @@
   <tbody>
     <% @categories.each do |category| %>
       <tr>
+      <%if current_user.present?%>
         <td><%= category.name %></td>
         <% if current_user.role? "show"%>
-        <% can :read, [Category]%>
         <td><%= link_to 'Show', category %></td>
         <%end%>
         <% if current_user.role? "editor"%>
-        <% can :edit, [Category]%>
         <td><%= link_to 'Edit', edit_category_path(category) %></td>
         <%end%>
         <% if current_user.role? "delete"%>
-        <% can :destroy, [Category]%>
         <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <%end%>
+      <%end%>
       </tr>
     <% end %>
   </tbody>

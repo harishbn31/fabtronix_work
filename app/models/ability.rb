@@ -13,13 +13,17 @@ class Ability
         elsif user.role? "user"
             if user.role? "editor"
                 can :edit, [Category]
-            elsif user.role? "create"
+            end
+            if user.role? "create"
                 can :create, [Category]
-            elsif user.role? "show"
+            end
+            if user.role? "show"
                 can :show, [Category]
-            elsif user.role? "delete"
+            end
+            if user.role? "delete"
                 can :destroy, [Category]
             end
+            
         can :read, [Category]
         # elsif user.role? "editor"
         #     can :edit, [Category]
